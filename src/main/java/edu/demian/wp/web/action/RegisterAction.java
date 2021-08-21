@@ -14,7 +14,7 @@ public class RegisterAction implements Action {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ActionException {
         if (request.getMethod().equals("GET")) {
-            return "register";
+            return "/register";
         }
 
         String firstName = request.getParameter("fname");
@@ -29,7 +29,7 @@ public class RegisterAction implements Action {
 
         account = new AccountDAO(DBManager.getInstance().getConnection()).create(account, password);
 
-        return "login";
+        return "redirect:/login";
     }
 
 }

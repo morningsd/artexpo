@@ -15,6 +15,10 @@ html {
     position: relative;
 }
 
+header {
+    margin-bottom: 1rem;
+}
+
 header .languages {
     position: absolute;
     top: 0;
@@ -47,9 +51,45 @@ header .login-or-register-box a {
     font-family: Arial, sans-serif;
 }
 
+.search_form {
+    margin: 1rem;
+}
+
+.search_form button {
+    margin: 0.5rem;
+}
+
 form {
     margin: 1rem auto;
     width: 50%;
+}
+
+form .error {
+    color: #f00;
+}
+
+#search_form {
+    width: 75%;
+}
+
+li form {
+    margin: 0;
+}
+
+.list-group-item label {
+    font-size: 1.2rem;
+}
+
+.search_box {
+    margin: 0.5rem;
+}
+
+#search_feed {
+    margin: 0.5rem;
+}
+
+.list-group-item {
+    padding: .1rem 0.5rem
 }
 
 footer {

@@ -10,6 +10,6 @@ import java.sql.SQLException;
 public class HomeAction implements Action {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ActionException {
-        return "home";
+        return "/home";
     }
 }

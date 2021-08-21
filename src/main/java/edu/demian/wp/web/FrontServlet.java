@@ -25,11 +25,10 @@ public class FrontServlet extends HttpServlet {
             Action action = ActionFactory.getAction(request);
             String view = action.execute(request, response);
 
-            // Some PRG stuff
-            if (view.equals(request.getPathInfo().substring(1))) {
-                request.getRequestDispatcher("/WEB-INF/jsp/" + view + ".jsp").forward(request, response);
+            if (view.contains("redirect:")) {
+                response.sendRedirect(view.replace("redirect:", "/jsp"));
             } else {
-                response.sendRedirect(view); // We'd like to fire redirect in case of a view change as result of the action (PRG pattern).
+                request.getRequestDispatcher("/WEB-INF/jsp" + view + ".jsp").forward(request, response);
             }
         } catch (Exception e) {
             throw new ServletException("Executing action failed.", e);

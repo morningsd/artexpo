@@ -12,7 +12,7 @@ public class LoginAction implements Action {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ActionException {
         if (request.getMethod().equals("GET")) {
-            return "login";
+            return "/login";
         }
 
         HttpSession session = request.getSession();
@@ -23,12 +23,13 @@ public class LoginAction implements Action {
         Account account = new AccountDAO(DBManager.getInstance().getConnection()).findByEmailAndPassword(email, password);
 
         if (account == null) {
-            String errorMessage = "No user with such email address";
-            return "error";
+            String errorMessage = "Email or password is incorrect";
+            request.setAttribute("errorMessage", errorMessage);
+            return "/error";
         }
 
         session.setAttribute("account", account);
 
-        return "home";
+        return "redirect:/home";
     }
 }

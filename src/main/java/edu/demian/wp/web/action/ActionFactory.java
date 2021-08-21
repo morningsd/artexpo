@@ -8,20 +8,22 @@ public class ActionFactory {
     private static Map<String, Action> actions = new HashMap<>();
 
     static {
-        Action loginAction = new LoginAction();
-        Action registerAction = new RegisterAction();
-        actions.put("GET/home", new HomeAction());
-        actions.put("GET/error", new ErrorAction());
-        actions.put("GET/login", loginAction);
-        actions.put("POST/login", loginAction);
-        actions.put("GET/register", registerAction);
-        actions.put("POST/register", registerAction);
+        actions.put("/home", new HomeAction());
+        actions.put("/error", new ErrorAction());
+        actions.put("/login", new LoginAction());
+        actions.put("/register", new RegisterAction());
+        actions.put("/logout", new LogoutAction());
+        actions.put("/expos", new ExposAction());
+        actions.put("/moderator/addExpo", new AddExpoAction());
+        actions.put("/moderator/deleteExpo", new DeleteExpoAction());
+        actions.put("/moderator/updateExpo", new UpdateExpoAction());
+        actions.put("/search", new SearchAction());
     }
 
     public static Action getAction(HttpServletRequest request) {
-        Action action = actions.get(request.getMethod() + request.getPathInfo());
+        Action action = actions.get(request.getPathInfo());
         if (action == null) {
-            return actions.get("GET/error");
+            return actions.get("/error");
         }
         return action;
     }

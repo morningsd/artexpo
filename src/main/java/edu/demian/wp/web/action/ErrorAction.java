@@ -6,6 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 public class ErrorAction implements Action {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ActionException {
-        return "error";
+        return "/error";
     }
 }

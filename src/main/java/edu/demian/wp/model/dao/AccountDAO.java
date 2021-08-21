@@ -5,7 +5,6 @@ import edu.demian.wp.model.DBManager;
 import edu.demian.wp.model.dto.Account;
 import edu.demian.wp.model.util.DTOMapper;
 import edu.demian.wp.model.util.DataAccessObject;
-import edu.demian.wp.model.util.DataTransferObject;
 import edu.demian.wp.model.util.SQLConstant;
 
 import java.nio.charset.StandardCharsets;
@@ -97,7 +96,7 @@ public class AccountDAO extends DataAccessObject<Account> {
             pstmt.setInt(k, dto.getRoleId());
             rs = pstmt.executeQuery();
             if (rs.next()) {
-                dto.setId(rs.getLong("account_id"));
+                dto.setId(rs.getLong(SQLConstant.SQL_USER_ID));
             } else {
                 throw new SQLException("Can't insert account into db");
             }
