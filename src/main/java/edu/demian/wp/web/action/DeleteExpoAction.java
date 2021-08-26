@@ -13,14 +13,14 @@ public class DeleteExpoAction implements Action {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ActionException {
         String expositionId = request.getParameter("exposition_id");
-
-        Exposition exposition = new ExpositionDAO(DBManager.getInstance().getConnection()).findById(Long.parseLong(expositionId));
-        for (Hall hall : exposition.getHallList()) {
+        ExpositionDAO expositionDAO = new ExpositionDAO();
+        Exposition exposition = expositionDAO.findById(Long.parseLong(expositionId));
+        /*for (Hall hall : exposition.getHallList()) {
             hall.setExpositionId(0);
             new HallDAO(DBManager.getInstance().getConnection()).update(hall);
-        }
+        }*/
 
-        new ExpositionDAO(DBManager.getInstance().getConnection()).delete(exposition.getId());
+        expositionDAO.delete(exposition.getId());
 
         return "redirect:/expos";
     }

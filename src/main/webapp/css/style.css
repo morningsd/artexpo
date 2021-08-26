@@ -92,6 +92,17 @@ li form {
     padding: .1rem 0.5rem
 }
 
+#visit {
+    width: 100%;
+}
+
+.carousel-item {
+    height: 80vh;
+    position: relative;
+    left: 0;
+    top: 0;
+}
+
 footer {
     text-align: center;
     border-top: var(--border);

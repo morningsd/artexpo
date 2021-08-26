@@ -8,6 +8,8 @@ public enum Role {
         return Role.values()[roleId];
     }
 
+
+
     public String getName() {
         return name().toLowerCase();
     }

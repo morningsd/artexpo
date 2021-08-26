@@ -1,11 +1,8 @@
 package edu.demian.wp.model.dao;
 
 import edu.demian.wp.model.DBManager;
-import edu.demian.wp.model.dto.Category;
-import edu.demian.wp.model.dto.Exposition;
 import edu.demian.wp.model.dto.Hall;
 import edu.demian.wp.model.util.DataAccessObject;
-import edu.demian.wp.model.util.DataTransferObject;
 import edu.demian.wp.model.util.SQLConstant;
 
 import java.sql.*;
@@ -13,16 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HallDAO extends DataAccessObject<Hall> {
-    public HallDAO(Connection con) {
-        super(con);
-    }
 
     @Override
     public Hall findById(long id) {
         Hall hall = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
+        Connection con = null;
         try {
+            con = DBManager.getInstance().getConnection();
             pstmt = con.prepareStatement(SQLConstant.SQL_FIND_HALL_BY_ID);
             pstmt.setLong(1, id);
             rs = pstmt.executeQuery();
@@ -47,7 +43,9 @@ public class HallDAO extends DataAccessObject<Hall> {
         List<Hall> halls = new ArrayList<>();
         Statement stmt = null;
         ResultSet rs = null;
+        Connection con = null;
         try {
+            con = DBManager.getInstance().getConnection();
             stmt = con.createStatement();
             rs = stmt.executeQuery(SQLConstant.SQL_FIND_ALL_HALLS);
             while (rs.next()) {
@@ -71,7 +69,9 @@ public class HallDAO extends DataAccessObject<Hall> {
         List<Hall> freeHalls = new ArrayList<>();
         Statement stmt = null;
         ResultSet rs = null;
+        Connection con = null;
         try {
+            con = DBManager.getInstance().getConnection();
             stmt = con.createStatement();
             rs = stmt.executeQuery(SQLConstant.SQL_FIND_FREE_HALLS);
             while (rs.next()) {
@@ -93,7 +93,9 @@ public class HallDAO extends DataAccessObject<Hall> {
 
     @Override
     public Hall update(Hall dto) {
+        Connection con = null;
         try {
+            con = DBManager.getInstance().getConnection();
             PreparedStatement pstmt = con.prepareStatement(SQLConstant.SQL_UPDATE_HALL);
             int k = 1;
             if (dto.getExpositionId() == 0L) {
@@ -128,8 +130,9 @@ public class HallDAO extends DataAccessObject<Hall> {
         List<Hall> hallList = new ArrayList<>();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
+        Connection con = null;
         try {
-
+            con = DBManager.getInstance().getConnection();
             pstmt = con.prepareStatement(SQLConstant.SQL_FIND_ALL_EXPOSITION_HALLS);
             pstmt.setLong(1, id);
             rs = pstmt.executeQuery();

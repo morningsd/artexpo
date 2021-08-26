@@ -16,16 +16,14 @@ import java.util.List;
 
 public class AccountDAO extends DataAccessObject<Account> {
 
-    public AccountDAO(Connection con) {
-        super(con);
-    }
-
     @Override
     public Account findById(long id) {
         Account account = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
+        Connection con = null;
         try {
+            con = DBManager.getInstance().getConnection();
             AccountMapper mapper = new AccountMapper();
             pstmt = con.prepareStatement(SQLConstant.SQL_FIND_USER_BY_ID);
             pstmt.setLong(1, id);
@@ -48,7 +46,9 @@ public class AccountDAO extends DataAccessObject<Account> {
         Account account = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
+        Connection con = null;
         try {
+            con = DBManager.getInstance().getConnection();
             AccountMapper mapper = new AccountMapper();
             pstmt = con.prepareStatement(SQLConstant.SQL_FIND_USER_BY_EMAIL_AND_PASSWORD);
             pstmt.setString(1, email);
@@ -86,14 +86,16 @@ public class AccountDAO extends DataAccessObject<Account> {
     public Account create(Account dto, String password) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
+        Connection con = null;
         try {
+            con = DBManager.getInstance().getConnection();
             pstmt = con.prepareStatement(SQLConstant.SQL_INSERT_USER);
             int k = 1;
             pstmt.setString(k++, dto.getFirstName());
             pstmt.setString(k++, dto.getLastName());
             pstmt.setString(k++, dto.getEmail());
             pstmt.setString(k++, getPasswordSha(password));
-            pstmt.setInt(k, dto.getRoleId());
+            pstmt.setInt(k++, dto.getRoleId());
             rs = pstmt.executeQuery();
             if (rs.next()) {
                 dto.setId(rs.getLong(SQLConstant.SQL_USER_ID));

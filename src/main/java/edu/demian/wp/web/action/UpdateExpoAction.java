@@ -19,9 +19,10 @@ public class UpdateExpoAction implements Action {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ActionException {
         if (request.getMethod().equals("GET")) {
             String expositionId = request.getParameter("exposition_id");
-            Exposition exposition = new ExpositionDAO(DBManager.getInstance().getConnection()).findById(Long.parseLong(expositionId));
-            List<Hall> hallList = new HallDAO(DBManager.getInstance().getConnection()).findAll();
-            List<Hall> freeHallList = new HallDAO(DBManager.getInstance().getConnection()).findFreeHalls();
+            Exposition exposition = new ExpositionDAO().findById(Long.parseLong(expositionId));
+            HallDAO hallDAO = new HallDAO();
+            List<Hall> hallList = hallDAO.findAll();
+            List<Hall> freeHallList = hallDAO.findFreeHalls();
 
             request.setAttribute("exposition", exposition);
             request.setAttribute("hallList", hallList);
@@ -54,23 +55,24 @@ public class UpdateExpoAction implements Action {
         exposition.setCategoryId(Long.parseLong(categoryId));
         exposition.setPrice(new BigDecimal(price));
 
-        exposition = new ExpositionDAO(DBManager.getInstance().getConnection()).update(exposition);
+        exposition = new ExpositionDAO().update(exposition);
+        HallDAO hallDAO = new HallDAO();
 
-        List<Hall> expositionHallList = new HallDAO(DBManager.getInstance().getConnection()).expositionHallList(exposition.getId());
+        List<Hall> expositionHallList = hallDAO.expositionHallList(exposition.getId());
 
         for (String hallStr : halls) {
-            Hall hall = new HallDAO(DBManager.getInstance().getConnection()).findById(Long.parseLong(hallStr));
+            Hall hall = hallDAO.findById(Long.parseLong(hallStr));
             if (expositionHallList.contains(hall)) {
                 expositionHallList.remove(hall);
             } else {
                 hall.setExpositionId(exposition.getId());
-                new HallDAO(DBManager.getInstance().getConnection()).update(hall);
+                hallDAO.update(hall);
             }
         }
 
         for (Hall hall : expositionHallList) {
             hall.setExpositionId(0);
-            new HallDAO(DBManager.getInstance().getConnection()).update(hall);
+            hallDAO.update(hall);
         }
 
         return "redirect:/expos";

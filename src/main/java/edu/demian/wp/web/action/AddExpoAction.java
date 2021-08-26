@@ -21,9 +21,9 @@ public class AddExpoAction implements Action {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ActionException {
         if (request.getMethod().equals("GET")) {
-            List<Exposition> expositionList = new ExpositionDAO(DBManager.getInstance().getConnection()).findAll();
-            List<Category> categoryList = new CategoryDAO(DBManager.getInstance().getConnection()).findAll();
-            List<Hall> freeHallList = new HallDAO(DBManager.getInstance().getConnection()).findFreeHalls();
+            List<Exposition> expositionList = new ExpositionDAO().findAll();
+            List<Category> categoryList = new CategoryDAO().findAll();
+            List<Hall> freeHallList = new HallDAO().findFreeHalls();
 
             HttpSession session = request.getSession();
             session.setAttribute("expositionList", expositionList);
@@ -55,12 +55,13 @@ public class AddExpoAction implements Action {
         exposition.setCategoryId(Long.parseLong(categoryId));
         exposition.setPrice(new BigDecimal(price));
 
-        exposition = new ExpositionDAO(DBManager.getInstance().getConnection()).create(exposition);
+        exposition = new ExpositionDAO().create(exposition);
 
+        HallDAO hallDAO = new HallDAO();
         for (String hallStr : halls) {
-            Hall hall = new HallDAO(DBManager.getInstance().getConnection()).findById(Long.parseLong(hallStr));
+            Hall hall = hallDAO.findById(Long.parseLong(hallStr));
             hall.setExpositionId(exposition.getId());
-            new HallDAO(DBManager.getInstance().getConnection()).update(hall);
+            hallDAO.update(hall);
         }
 
         return "redirect:/home";

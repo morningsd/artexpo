@@ -10,20 +10,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDAO extends DataAccessObject<Category> {
-    public CategoryDAO(Connection con) {
-        super(con);
-    }
 
     @Override
     public Category findById(long id) {
         Category category = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
+        Connection con = null;
         try {
+            con = DBManager.getInstance().getConnection();
             pstmt = con.prepareStatement(SQLConstant.SQL_FIND_CATEGORY_BY_ID);
             pstmt.setLong(1, id);
             rs = pstmt.executeQuery();
             if (rs.next()) {
+                category = new Category();
                 category.setId(rs.getLong(SQLConstant.SQL_CATEGORY_ID));
                 category.setNameEn(rs.getString(SQLConstant.SQL_CATEGORY_NAME_EN));
                 category.setNameRu(rs.getString(SQLConstant.SQL_CATEGORY_NAME_RU));
@@ -44,7 +44,9 @@ public class CategoryDAO extends DataAccessObject<Category> {
         List<Category> categories = new ArrayList<>();
         Statement stmt = null;
         ResultSet rs = null;
+        Connection con = null;
         try {
+            con = DBManager.getInstance().getConnection();
             stmt = con.createStatement();
             rs = stmt.executeQuery(SQLConstant.SQL_FIND_ALL_CATEGORIES);
             while (rs.next()) {

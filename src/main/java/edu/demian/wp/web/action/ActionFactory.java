@@ -18,13 +18,12 @@ public class ActionFactory {
         actions.put("/moderator/deleteExpo", new DeleteExpoAction());
         actions.put("/moderator/updateExpo", new UpdateExpoAction());
         actions.put("/search", new SearchAction());
+        actions.put("/visitExpo", new VisitExpoAction());
+        actions.put("/client/cabinet", new CabinetAction());
+        actions.put("/moderator/statsExpo", new StatisticsExpoAction());
     }
 
     public static Action getAction(HttpServletRequest request) {
-        Action action = actions.get(request.getPathInfo());
-        if (action == null) {
-            return actions.get("/error");
-        }
-        return action;
+        return actions.get(request.getPathInfo());
     }
 }

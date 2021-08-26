@@ -8,14 +8,14 @@
 
     <form action="/jsp/login" method="post" name="login">
         <div class="form-group">
-            <label for="email">Email address:</label>
-            <input type="email" class="form-control" placeholder="Enter email" id="email" name="email">
+            <label for="email"><fmt:message key="login_jsp.label.email"/>:</label>
+            <input type="email" class="form-control" placeholder="<fmt:message key="login_jsp.placeholder.email"/>" id="email" name="email">
         </div>
         <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" class="form-control" placeholder="Enter password" id="password" name="password">
+            <label for="password"><fmt:message key="login_jsp.label.password"/>:</label>
+            <input type="password" class="form-control" placeholder="<fmt:message key="login_jsp.placeholder.password"/>" id="password" name="password">
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary"><fmt:message key="login_jsp.button.login"/></button>
     </form>
 
     <%@ include file="/WEB-INF/jspf/footer.jspf" %>

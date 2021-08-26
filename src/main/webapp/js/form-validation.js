@@ -13,8 +13,8 @@ $(function() {
             }
         },
         messages: {
-            firstname: "Please enter your first name",
-            lastname: "Please enter your last name",
+            fname: "Please enter your first name",
+            lname: "Please enter your last name",
             password: {
                 required: "Please provide a password",
                 minlength: "Your password must be at least 8 characters long"
@@ -28,6 +28,8 @@ $(function() {
 
     $("form[name='login']").validate({
         rules: {
+            fname: "required",
+            lname: "required",
             email: {
                 required: true,
                 email: true
@@ -38,8 +40,8 @@ $(function() {
             }
         },
         messages: {
-            firstname: "Please enter your first name",
-            lastname: "Please enter your last name",
+            fname: "Please enter your first name",
+            lname: "Please enter your last name",
             password: {
                 required: "Please provide a password",
                 minlength: "Your password must be at least 8 characters long"

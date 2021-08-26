@@ -6,8 +6,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class Exposition implements DataTransferObject {
@@ -23,7 +21,7 @@ public class Exposition implements DataTransferObject {
 
     private List<Hall> hallList;
 
-    DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d/MM/uuuu");
+    private final DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d/MM/uuuu");
     private String startDateFormatted;
     private String endDateFormatted;
 
@@ -65,7 +63,7 @@ public class Exposition implements DataTransferObject {
     }
 
     public void setEndDate(LocalDate endDate) {
-        this.endDateFormatted = startDate.format(formatters);
+        this.endDateFormatted = endDate.format(formatters);
         this.endDate = endDate;
     }
 
@@ -117,39 +115,16 @@ public class Exposition implements DataTransferObject {
         this.hallList = hallList;
     }
 
-    public static List<Exposition> sort(List<Exposition> expositions, String priceOrder, String dateOrder) {
-        Collections.sort(expositions, new Comparator() {
-            @Override
-            public int compare(Object o1, Object o2) {
-                BigDecimal p1 = ((Exposition) o1).getPrice();
-                BigDecimal p2 = ((Exposition) o2).getPrice();
-                int comp = -10;
-                if (priceOrder.equals("ascending")) {
-                    comp = p1.compareTo(p2);
-                } else {
-                    comp = -p1.compareTo(p2);
-                }
-
-                if (comp != 0) {
-                    return comp;
-                }
-
-                LocalDate d1 = ((Exposition) o1).getStartDate();
-                LocalDate d2 = ((Exposition) o2).getStartDate();
-                if (dateOrder.equals("ascending")) {
-                    return d1.compareTo(d2);
-                } else {
-                    return -d1.compareTo(d2);
-                }
-            }
-        });
-        return expositions;
+    public static long getOffset(long currentPage, int limit) {
+        // curP = 1 ==> limit numOfRecords, offset 0 (curP - 1) * numOfRecords
+        // curP = 2 ==> limit numOfRecords, offset 5 (curP - 1) * numOfRecords
+        return (currentPage - 1) * limit;
     }
 
     public String toString() {
         return "Exposition{" +
                 "id=" + id +
-                ", topic='" + topic + '\'' +
+                ", topic='" + topic +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", startWorkTime=" + startWorkTime +

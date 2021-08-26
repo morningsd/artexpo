@@ -27,7 +27,7 @@ public class RegisterAction implements Action {
         account.setLastName(lastName);
         account.setEmail(email);
 
-        account = new AccountDAO(DBManager.getInstance().getConnection()).create(account, password);
+        account = new AccountDAO().create(account, password);
 
         return "redirect:/login";
     }

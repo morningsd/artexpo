@@ -4,12 +4,6 @@ import java.sql.Connection;
 import java.util.List;
 
 public abstract class DataAccessObject <T extends DataTransferObject> {
-    protected final Connection con;
-
-    public DataAccessObject(Connection con) {
-        super();
-        this.con = con;
-    }
 
     public abstract T findById(long id);
     public abstract List<T> findAll();

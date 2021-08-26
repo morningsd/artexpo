@@ -3,6 +3,7 @@ package edu.demian.wp.web.action;
 import edu.demian.wp.model.DBManager;
 import edu.demian.wp.model.dao.AccountDAO;
 import edu.demian.wp.model.dto.Account;
+import edu.demian.wp.model.dto.Role;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +21,7 @@ public class LoginAction implements Action {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        Account account = new AccountDAO(DBManager.getInstance().getConnection()).findByEmailAndPassword(email, password);
+        Account account = new AccountDAO().findByEmailAndPassword(email, password);
 
         if (account == null) {
             String errorMessage = "Email or password is incorrect";
@@ -29,6 +30,8 @@ public class LoginAction implements Action {
         }
 
         session.setAttribute("account", account);
+        Role accountRole = Role.getRole(account);
+        session.setAttribute("accountRole", accountRole);
 
         return "redirect:/home";
     }

@@ -9,60 +9,74 @@
     <form action="/jsp/moderator/updateExpo" method="post" name="update-exposition">
         <input type="hidden" name="id" value="${exposition.id}">
         <div class="form-group">
-            <label for="topic">Topic:</label>
-            <input type="text" class="form-control" placeholder="Enter topic" value="${exposition.topic}" id="topic"
+            <label for="topic"><fmt:message key="addexpo_jsp.label.topic" />:</label>
+            <input type="text" class="form-control" placeholder="<fmt:message key="addexpo_jsp.placeholder.topic" />" value="${exposition.topic}" id="topic"
                    name="topic">
         </div>
         <div class="form-group">
-            <label for="description">Description:</label>
-            <textarea class="form-control" id="description" name="description" placeholder="Enter description"
+            <label for="description"><fmt:message key="addexpo_jsp.label.description" />:</label>
+            <textarea class="form-control" id="description" name="description" placeholder="<fmt:message key="addexpo_jsp.placeholder.description" />"
                       rows="3">${exposition.description}</textarea>
         </div>
         <div class="row form-group">
             <div class="col">
-                <label for="start_date">Start date:</label>
-                <input type="text" class="form-control datepicker" id="start_date" placeholder="Choose start date"
+                <label for="start_date"><fmt:message key="addexpo_jsp.label.start.date" />:</label>
+                <input type="text" class="form-control datepicker" id="start_date" placeholder="<fmt:message key="addexpo_jsp.placeholder.start.date" />"
                        value="${exposition.startDateFormatted}"
                        name="start_date" autocomplete="off">
             </div>
             <div class="col">
-                <label for="end_date">End date:</label>
-                <input type="text" class="form-control datepicker" id="end_date" placeholder="Choose end date"
+                <label for="end_date"><fmt:message key="addexpo_jsp.label.end.date" />:</label>
+                <input type="text" class="form-control datepicker" id="end_date" placeholder="<fmt:message key="addexpo_jsp.placeholder.end.date" />"
                        value="${exposition.endDateFormatted}"
                        name="end_date" autocomplete="off">
             </div>
         </div>
         <div class="row form-group">
             <div class="col">
-                <label for="start_time">Start time:</label>
-                <input type="text" class="form-control timepicker" id="start_time" placeholder="Choose start time"
+                <label for="start_time"><fmt:message key="addexpo_jsp.label.start.time" />:</label>
+                <input type="text" class="form-control timepicker" id="start_time" placeholder="<fmt:message key="addexpo_jsp.placeholder.start.time" />"
                        value="${exposition.startWorkTime}"
                        name="start_time" autocomplete="off">
             </div>
             <div class="col">
-                <label for="end_time">End time:</label>
-                <input type="text" class="form-control timepicker" id="end_time" placeholder="Choose end time"
+                <label for="end_time"><fmt:message key="addexpo_jsp.label.end.time" />:</label>
+                <input type="text" class="form-control timepicker" id="end_time" placeholder="<fmt:message key="addexpo_jsp.placeholder.end.time" />"
                        value="${exposition.endWorkTime}"
                        name="end_time" autocomplete="off">
             </div>
         </div>
         <div class="form-group row">
             <div class="col">
-                <label for="price">Price:</label>
-                <input type="text" class="form-control" id="price" name="price" placeholder="Enter price"
+                <label for="price"><fmt:message key="addexpo_jsp.label.price" />:</label>
+                <input type="text" class="form-control" id="price" name="price" placeholder="<fmt:message key="addexpo_jsp.placeholder.price" />"
                        value="${exposition.price}"
                        autocomplete="off">
             </div>
             <div class="col">
-                <label for="category">Category:</label>
+                <label for="category"><fmt:message key="addexpo_jsp.label.category" />:</label>
                 <select class="custom-select" id="category" name="category">
                     <c:forEach var="category" items="${categoryList}">
                         <c:choose>
-                            <c:when test="${exposition.categoryId == category.id}">
-                                <option value="${category.id}" selected>${category.nameEn}</option>
+                            <c:when test="${sessionScope.lang eq 'ru'}">
+                                <c:choose>
+                                    <c:when test="${exposition.categoryId == category.id}">
+                                        <option value="${category.id}" selected>${category.nameRu}</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="${category.id}">${category.nameRu}</option>
+                                    </c:otherwise>
+                                </c:choose>
                             </c:when>
                             <c:otherwise>
-                                <option value="${category.id}">${category.nameEn}</option>
+                                <c:choose>
+                                    <c:when test="${exposition.categoryId == category.id}">
+                                        <option value="${category.id}" selected>${category.nameEn}</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="${category.id}">${category.nameEn}</option>
+                                    </c:otherwise>
+                                </c:choose>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
@@ -70,20 +84,20 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="halls">Halls:</label>
+            <label for="halls"><fmt:message key="addexpo_jsp.label.halls" />:</label>
             <select class="custom-select" id="halls" name="halls" multiple>
                 <c:forEach var="hall" items="${hallList}">
                     <c:choose>
                         <c:when test="${fnc:contains(exposition.hallList, hall)}">
-                            <option value="${hall.id}" selected>Hall #${hall.id}*</option>
+                            <option value="${hall.id}" selected><fmt:message key="updateexpo_jsp.option.hall" /> ${hall.id}*</option>
                         </c:when>
                         <c:otherwise>
                             <c:choose>
                                 <c:when test="${fnc:contains(freeHallList, hall)}">
-                                    <option value="${hall.id}">Hall #${hall.id}</option>
+                                    <option value="${hall.id}"><fmt:message key="updateexpo_jsp.option.hall" /> ${hall.id}</option>
                                 </c:when>
                                 <c:otherwise>
-                                    <option value="${hall.id}" disabled>Hall #${hall.id}</option>
+                                    <option value="${hall.id}" disabled><fmt:message key="updateexpo_jsp.option.hall" /> ${hall.id}</option>
                                 </c:otherwise>
                             </c:choose>
                         </c:otherwise>
@@ -91,7 +105,7 @@
                 </c:forEach>
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Update exposition</button>
+        <button type="submit" class="btn btn-primary"><fmt:message key="updateexpo_jsp.button.update" /></button>
     </form>
 
 

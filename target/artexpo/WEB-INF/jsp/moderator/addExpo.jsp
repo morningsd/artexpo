@@ -8,62 +8,78 @@
 
     <form action="/jsp/moderator/addExpo" method="post" name="add-exposition">
         <div class="form-group">
-            <label for="topic">Topic:</label>
-            <input type="text" class="form-control" placeholder="Enter topic" id="topic" name="topic">
+            <label for="topic"><fmt:message key="addexpo_jsp.label.topic"/>:</label>
+            <input type="text" class="form-control" placeholder="<fmt:message key="addexpo_jsp.placeholder.topic" />"
+                   id="topic" name="topic">
         </div>
         <div class="form-group">
-            <label for="description">Description:</label>
-            <textarea class="form-control" id="description" name="description" placeholder="Enter description"
+            <label for="description"><fmt:message key="addexpo_jsp.label.description"/>:</label>
+            <textarea class="form-control" id="description" name="description"
+                      placeholder="<fmt:message key="addexpo_jsp.placeholder.description"/>"
                       rows="3"></textarea>
         </div>
         <div class="row form-group">
             <div class="col">
-                <label for="start_date">Start date:</label>
-                <input type="text" class="form-control datepicker" id="start_date" placeholder="Choose start date"
+                <label for="start_date"><fmt:message key="addexpo_jsp.label.start.date"/>:</label>
+                <input type="text" class="form-control datepicker" id="start_date"
+                       placeholder="<fmt:message key="addexpo_jsp.placeholder.start.date" />"
                        name="start_date" autocomplete="off">
             </div>
             <div class="col">
-                <label for="end_date">End date:</label>
-                <input type="text" class="form-control datepicker" id="end_date" placeholder="Choose end date"
+                <label for="end_date"><fmt:message key="addexpo_jsp.label.end.date"/>:</label>
+                <input type="text" class="form-control datepicker" id="end_date"
+                       placeholder="<fmt:message key="addexpo_jsp.placeholder.end.date" />"
                        name="end_date" autocomplete="off">
             </div>
         </div>
         <div class="row form-group">
             <div class="col">
-                <label for="start_time">Start time:</label>
-                <input type="text" class="form-control timepicker" id="start_time" placeholder="Choose start time"
+                <label for="start_time"><fmt:message key="addexpo_jsp.label.start.time"/>:</label>
+                <input type="text" class="form-control timepicker" id="start_time"
+                       placeholder="<fmt:message key="addexpo_jsp.placeholder.start.time" />"
                        name="start_time" autocomplete="off">
             </div>
             <div class="col">
-                <label for="end_time">End time:</label>
-                <input type="text" class="form-control timepicker" id="end_time" placeholder="Choose end time"
+                <label for="end_time"><fmt:message key="addexpo_jsp.label.end.time"/>:</label>
+                <input type="text" class="form-control timepicker" id="end_time"
+                       placeholder="<fmt:message key="addexpo_jsp.placeholder.end.time" />"
                        name="end_time" autocomplete="off">
             </div>
         </div>
         <div class="form-group row">
             <div class="col">
-                <label for="price">Price:</label>
-                <input type="text" class="form-control" id="price" name="price" placeholder="Enter price"
+                <label for="price"><fmt:message key="addexpo_jsp.label.price"/>:</label>
+                <input type="text" class="form-control" id="price" name="price"
+                       placeholder="<fmt:message key="addexpo_jsp.placeholder.price" />"
                        autocomplete="off">
             </div>
             <div class="col">
-                <label for="category">Category:</label>
+                <label for="category"><fmt:message key="addexpo_jsp.label.category"/>:</label>
                 <select class="custom-select" id="category" name="category">
-                    <c:forEach var="category" items="${categoryList}">
-                        <option value="${category.id}">${category.nameEn}</option>
-                    </c:forEach>
+                    <c:choose>
+                        <c:when test="${sessionScope.lang eq 'ru'}">
+                            <c:forEach var="category" items="${categoryList}">
+                                <option value="${category.id}">${category.nameRu}</option>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <c:forEach var="category" items="${categoryList}">
+                                <option value="${category.id}">${category.nameEn}</option>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
                 </select>
             </div>
         </div>
         <div class="form-group">
-            <label for="halls">Halls:</label>
+            <label for="halls"><fmt:message key="addexpo_jsp.label.halls"/>:</label>
             <select class="custom-select" id="halls" name="halls" multiple>
                 <c:forEach var="hall" items="${freeHallList}">
-                    <option value="${hall.id}">Hall #${hall.id}</option>
+                    <option value="${hall.id}"><fmt:message key="updateexpo_jsp.option.hall" /> ${hall.id}</option>
                 </c:forEach>
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Add exposition</button>
+        <button type="submit" class="btn btn-primary"><fmt:message key="addexpo_jsp.button.add"/></button>
     </form>
 
 

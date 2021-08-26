@@ -1,9 +1,6 @@
 package edu.demian.wp.model.dto;
 
-import com.google.common.hash.Hashing;
 import edu.demian.wp.model.util.DataTransferObject;
-
-import java.nio.charset.StandardCharsets;
 
 public class Account implements DataTransferObject {
     private long id;
@@ -51,8 +48,6 @@ public class Account implements DataTransferObject {
     public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
-
-
 
     public String toString() {
         return "Account{" +
